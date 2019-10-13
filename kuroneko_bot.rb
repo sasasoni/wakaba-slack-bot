@@ -4,6 +4,7 @@ require_relative 'lunch_selection.rb'
 require_relative 'dice.rb'
 require_relative 'member_selection.rb'
 require_relative 'translator.rb'
+require_relative 'kuronekosan.rb'
 
 class KuronekoBot < SlackRubyBot::Bot
   DICE_LIST = [ Fortune.new, LunchSelection.new, MemberSelection.new, Dice.new ]
@@ -16,7 +17,7 @@ class KuronekoBot < SlackRubyBot::Bot
     @translator ||= Translator.new
   end
 
-  match /サイコロ(\s|　)+(?<dice_type>.+)/ do |client, data, match|
+  match /サイコロ((\s|　)+(?<dice_type>.+))?/ do |client, data, match|
     dice_type = match[:dice_type]
     client.say(text: possibilities(dice_type, client, data).sample,
                 channel: data.channel)
@@ -26,6 +27,16 @@ class KuronekoBot < SlackRubyBot::Bot
     text = match[:text]
     client.say(text: "`#{text}`を訳すと", channel: data.channel)
     client.say(text: translator.translate(text), channel: data.channel)
+  end
+
+  def self.kuronekosan
+    @kuronekosan ||= Kuronekosan.new
+  end
+
+  command "人工無能", /(?<text>.+)/ do |client, data, match|
+    text = match[:text]
+    reaction = kuronekosan.react(text)
+    client.say(text: reaction, channel: data.channel)
   end
 end
 
