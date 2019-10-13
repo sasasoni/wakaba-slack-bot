@@ -5,11 +5,11 @@ class WhatIsReactor
     @knowledge = knowledge
   end
 
-  def accept?(text)
+  def accept?(text, morphemes)
     text.match? RE
   end
 
-  def react(text)
+  def react(text, morphemes)
     words = RE.match(text)[:words]
     meaning = @knowledge.meaning(words)
     if meaning
