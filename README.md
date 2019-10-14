@@ -9,3 +9,7 @@ https://github.com/buruzaemon/natto
 ## macでirb/pry使ってたら日本語が打てなかった問題
 
 https://zariganitosh.hatenablog.jp/entry/20140923/japanese_irb
+
+## MeCabで使うffiとは？
+
+https://www.slideshare.net/ota42y/rubyffi-77448937
